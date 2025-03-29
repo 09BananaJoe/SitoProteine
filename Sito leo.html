@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein Shop</title>
+    
+    <!-- Aggiungi FontAwesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+	<style>
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header */
+header {
+    width: 100%;
+    background-color: #ff6600;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Logo in the header */
+header h1 {
+    font-size: 2.5em;
+    color: white;
+    text-align: center;
+}
+
+/* Menu Button (Hamburger icon) */
+.menu-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+/* Carrello Icon */
+.cart-icon {
+    font-size: 2.5em;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.cart-icon:hover {
+    color: #FF954E;
+}
+
+/* Side menu */
+.menu {
+    position: fixed;
+    top: 0;
+    left: -30%; /* Menu hidden initially */
+    width: 30%;
+    height: 100%;
+    background: #222;
+    color: white;
+    padding-top: 60px;
+    transition: left 0.3s;
+}
+
+.menu.active {
+    left: 0; /* When the menu is active */
+}
+
+.menu a {
+    display: block;
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.menu a:hover {
+    background: #555;
+}
+
+/* Overlay for the menu */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+}
+
+.overlay.active {
+    display: block; /* When the overlay is active */
+}
+
+/* Main content */
+main {
+    margin-top: 120px;
+    width: 90%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+/* Banner Image */
+.banner {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.banner img {
+    max-width: 50%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Product Banner */
+.product-banner {
+    text-align: center;
+    background-color: #FF6A00;
+    color: white;
+    padding: 30px 20px;
+    margin-top: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-banner h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.product-banner p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+/* Products Section */
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.product {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 30%;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-info h3 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.product-info p {
+    font-size: 1.2em;
+    color: #ff6600;
+    margin-bottom: 10px;
+}
+
+.add-to-cart {
+    background-color: #FF6A00;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.add-to-cart:hover {
+    background-color: #FF6A00;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    width: 100%;
+    margin-top: 60px;
+}
+
+footer ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+footer ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+
+    </style>
+</head>
+<body>
+    
+	
+	<!-- Header -->
+<header>
+
+    <!-- Pulsante Menu -->
+    <button class="menu-button" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i> <!-- Icona per il menu (hamburger) -->
+    </button>
+    
+    <h1>Protein Shop</h1>
+
+    <!-- Icona del carrello -->
+    <a href="#" class="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+    </a>
+
+    <!-- Side menu -->
+    <nav id="menu" class="menu">
+        <ul>
+            <li><a href="nutrizione.html">Nutrizione</a></li>
+            <li><a href="#">Alimentazione Vegana</a></li>
+            <li><a href="#">Gestione del Peso</a></li>
+            <li><a href="#">Performance</a></li>
+            <li><a href="#">Consigli dagli Esperti</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+</header>
+
+    
+
+    <!-- Main Content -->
+    <main>
+        <!-- Banner Image -->
+        <section class="banner">
+            <img src="enorme.jpeg" alt="Proteine" />
+        </section>
+
+		<!-- Banner I NOSTRI PRODOTTI -->
+<section class="product-banner">
+    <h2>I NOSTRI PRODOTTI</h2>
+    <p>Le proteine PROTEINSHOP sono la forza naturale incarnata. Progettate per atleti e appassionati di fitness che cercano la perfezione, offriamo una linea di proteine vegetali che combinano la pura potenza della natura con il massimo del nutrimento. Le nostre proteine sono ricche di nutrienti, facili da digerire e completamente prive di sostanze artificiali.
+
+Con ingredienti selezionati provenienti da fonti vegetali sostenibili, le nostre proteine sono pensate per chi desidera massimizzare le performance senza compromettere la salute e l'ambiente. Ogni singola dose è un concentrato di energia pura, perfetta per sostenere allenamenti intensi, promuovere il recupero muscolare e stimolare la crescita.
+
+Che tu stia cercando di migliorare le tue performance o di nutrire il tuo corpo con il meglio che la natura offre, PROTEINSHOP è la tua scelta definitiva. Le nostre proteine non sono solo un integratore: sono una vera e propria fonte di energia naturale, un alleato potente per ogni tuo obiettivo.</p>
+</section>
+		
+		
+       <!-- Prima Striscia di Prodotti -->
+<section class="products">
+    <div class="product">
+      <img src="celestial.jpeg" alt="Prodotto 1">
+        <div class="product-info">
+            <h3>Celestial Whey</h3>
+            <p>€29.99</p>
+            <button class="add-to-cart">Aggiungi al carrello</button>
+      </div>
+    </div>
+    <div class="product">
+      <img src="olimpo.jpeg" alt="Prodotto 2">
+        <div class="product-info">
+            <h3>Divine Whey&nbsp;</h3>
+            <p>€64,99</p>
+            <button class="add-to-cart">Aggiungi al carrello</button>
+      </div>
+    </div>
+    <div class="product">
+      <img src="saharastorm.jpeg" alt="Prodotto 3">
+        <div class="product-info">
+            <h3>Sahara Storm Whey</h3>
+            <p>€24.99</p>
+            <button class="add-to-cart">Aggiungi al carrello</button>
+        </div>
+    </div>
+</section>
+
+<!-- Seconda Striscia di Prodotti -->
+<section class="products">
+    <div class="product">
+        <img src="sacre.jpeg" alt="Prodotto 4">
+        <div class="product-info">
+            <h3>King Treasure Whey</h3>
+            <p>€35.99</p>
+            <button class="add-to-cart">Aggiungi al carrello</button>
+        </div>
+    </div>
+    <div class="product">
+        <img src="seapower.jpeg" alt="Prodotto 5">
+        <div class="product-info">
+            <h3>Ocean Power Whey</h3>
+            <p>€38.99</p>
+            <button class="add-to-cart">Aggiungi al carrello</button>
+      </div>
+    </div>
+    <div class="product">
+      <img src="fireethunder.jpeg" alt="Prodotto 6">
+        <div class="product-info">
+            <h3>Fire Destructive Whey</h3>
+            <p>€32.99</p>
+            <button class="add-to-cart">Aggiungi al carrello</button>
+      </div>
+    </div>
+</section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <ul>
+            <li><a href="#">Assistenza Clienti</a></li>
+            <li><a href="#">Domande Frequenti</a></li>
+            <li><a href="#">Lavora con Noi</a></li>
+        </ul>
+    </footer>
+
+    <script>
+       function toggleMenu() {
+    document.getElementById("menu").classList.toggle("active"); // Cambia "sidemenu" con "menu"
+    document.getElementById("overlay").classList.toggle("active"); // Mostra/nascondi l'overlay
+}
+    </script>
+</body>
+</html>
